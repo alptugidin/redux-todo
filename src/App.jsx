@@ -1,8 +1,19 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
+import Footer from './components/Footer';
 import List from './components/List';
 import Input from './components/Input';
+
+function ToDo() {
+  return (
+    <Provider store={store}>
+      <Input />
+      <List />
+      <Footer />
+    </Provider>
+  );
+}
 
 function App() {
   return (
@@ -11,10 +22,7 @@ function App() {
         todos
       </p>
       <div className="w-[600px] bg-white shadow-xl border border-gray-200 mx-auto rounded-xl">
-        <Provider store={store}>
-          <Input />
-          <List />
-        </Provider>
+        <ToDo />
       </div>
     </div>
   );

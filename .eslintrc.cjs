@@ -23,7 +23,7 @@ module.exports = {
         "no-param-reassign": 0,
         "no-mixed-spaces-and-tabs": 0,
         "react/prop-types": "off",
-        "no-tabs": 0
-
+        "no-tabs": 0,
+        "no-console" : 0
     },
 };
