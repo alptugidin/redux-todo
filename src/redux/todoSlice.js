@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, nanoid } from '@reduxjs/toolkit';
 
 const initialState = {
   value: [
@@ -16,11 +16,27 @@ export const todoSlice = createSlice({
   name: 'todo',
   initialState,
   reducers: {
-    addTodo: (state, action) => {
-      const dup = state.value.some((item) => item.name === action.payload.name);
-      if (dup === false) {
-        state.value.push(action.payload);
-      }
+    // addTodo: (state, action) => {
+    //   const dup = state.value.some((item) => item.name === action.payload.name);
+    //   if (dup === false) {
+    //     state.value.push(action.payload);
+    //   }
+    // },
+
+    addTodo: {
+      reducer: (state, action) => {
+        const dup = state.value.some((item) => item.name === action.payload.name);
+        if (dup === false) {
+          state.value.push(action.payload);
+        }
+      },
+      prepare: (activity) => ({
+        payload: {
+          id: nanoid(),
+          name: activity,
+          status: false,
+        },
+      }),
     },
 
     removeTodo: (state, action) => {

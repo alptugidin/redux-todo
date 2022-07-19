@@ -1,6 +1,6 @@
 import React, { createRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeActiveButton, selectFilterOptions } from '../redux/todoSlice';
+import { changeActiveButton } from '../redux/todoSlice';
 
 function Footer() {
   const footerRef = createRef();

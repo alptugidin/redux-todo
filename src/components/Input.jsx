@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { nanoid } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
 import { addTodo, setAll } from '../redux/todoSlice';
 import Dropdown from './Dropdown';
@@ -12,7 +11,8 @@ function Input() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (value !== '') {
-      dispatch(addTodo({ id: nanoid(), name: value, status: false }));
+      // dispatch(addTodo({ id: nanoid(), name: value, status: false }));
+      dispatch(addTodo(value));
       setValue('');
     }
   };
