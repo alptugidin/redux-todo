@@ -24,6 +24,7 @@ module.exports = {
         "no-mixed-spaces-and-tabs": 0,
         "react/prop-types": "off",
         "no-tabs": 0,
-        "no-console" : 0
+        "no-console" : 0,
+        "import/no-extraneous-dependencies": "off"
     },
 };

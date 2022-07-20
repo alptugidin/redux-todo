@@ -1,11 +1,13 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { updateTodo } from '../redux/todoSlice';
+import { updateAsyncTodo, updateTodo } from '../redux/todoSlice';
 
 function CheckBox({ status }) {
   const dispatch = useDispatch();
   const handleClick = (e) => {
-    dispatch(updateTodo(e.currentTarget.parentNode.textContent));
+    // dispatch(updateTodo(e.currentTarget.parentNode.textContent));
+    const name = e.currentTarget.parentNode.textContent;
+    dispatch(updateAsyncTodo({ name }));
   };
   return (
     <button

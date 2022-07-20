@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addTodo, setAll } from '../redux/todoSlice';
+import { postAsyncTodo, setAll } from '../redux/todoSlice';
 import Dropdown from './Dropdown';
 
 function Input() {
@@ -12,7 +12,8 @@ function Input() {
     e.preventDefault();
     if (value !== '') {
       // dispatch(addTodo({ id: nanoid(), name: value, status: false }));
-      dispatch(addTodo(value));
+      // dispatch(addTodo(value));
+      dispatch(postAsyncTodo({ value }));
       setValue('');
     }
   };

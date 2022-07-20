@@ -1,13 +1,28 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import axios from 'axios';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import Loading from './Loading';
+import { getAsyncTodo } from '../redux/todoSlice';
 import Remove from './Remove';
 import CheckBox from './CheckBox';
+import Error from './Error';
 
 function List() {
   const activities = useSelector((state) => state.todo.value);
   const activeButton = useSelector((state) => state.todo.activeButton);
-  const [takenData, setTakenData] = useState('');
+  const dispatch = useDispatch();
+  const isLoading = useSelector((state) => state.todo.isLoading);
+  const error = useSelector((state) => state.todo.error);
+
+  useEffect(() => {
+    dispatch(getAsyncTodo());
+  }, []);
+
+  if (isLoading) {
+    return <Loading />;
+  } if (error !== null) {
+    return <Error message={error} />;
+  }
+
   const filterOptions = (item) => {
     if (activeButton === 'All') {
       return item;
@@ -17,16 +32,9 @@ function List() {
     return item.status === true;
   };
 
-  useEffect(() => {
-    axios.get('/todos')
-      .then((response) => setTakenData(response.data))
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
   return (
     <div className="">
+
       <ul id="todo-ul">
         {
           activities.filter((e) => filterOptions(e)).map((activity) => (
