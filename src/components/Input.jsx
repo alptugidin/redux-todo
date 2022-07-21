@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { postAsyncTodo, setAll } from '../redux/todoSlice';
+import { postAsyncTodo, setAll, setAllAsyncTodo } from '../redux/todoSlice';
 import Dropdown from './Dropdown';
 
 function Input() {
@@ -20,7 +20,8 @@ function Input() {
 
   const handleClick = () => {
     setDdState(!ddState);
-    dispatch(setAll(ddState));
+    // dispatch(setAll(ddState));
+    dispatch(setAllAsyncTodo());
   };
 
   return (

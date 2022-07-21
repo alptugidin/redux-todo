@@ -1,11 +1,13 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { removeTodo } from '../redux/todoSlice';
+import { deleteAsyncTodo, removeTodo } from '../redux/todoSlice';
 
 function Remove() {
   const dispatch = useDispatch();
   const handleClick = (e) => {
-    dispatch(removeTodo(e.currentTarget.parentNode.textContent));
+    // dispatch(removeTodo(e.currentTarget.parentNode.textContent));
+    const name = e.currentTarget.parentNode.textContent;
+    dispatch(deleteAsyncTodo({ name }));
   };
   return (
     <button

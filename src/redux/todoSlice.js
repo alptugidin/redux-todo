@@ -22,6 +22,16 @@ export const updateAsyncTodo = createAsyncThunk('todos/updateAsyncTodo', async (
   return response.data;
 });
 
+export const deleteAsyncTodo = createAsyncThunk('todos/deleteAsyncTodo', async ({ name }) => {
+  const response = await axios.delete(`/todos/${name}`);
+  return response.data;
+});
+
+export const setAllAsyncTodo = createAsyncThunk('todos/setAllAsyncTodo', async () => {
+  const response = await axios.get('/todos/setAll');
+  return response.data;
+});
+
 export const todoSlice = createSlice({
   name: 'todo',
   initialState:
@@ -33,43 +43,14 @@ export const todoSlice = createSlice({
       },
   reducers: {
 
-    // addTodo: {
-    //   reducer: (state, action) => {
-    //     const dup = state.value.some((item) => item.name === action.payload.name);
-    //     if (dup === false) {
-    //       state.value.push(action.payload);
-    //     }
-    //   },
-    //   prepare: (activity) => ({
-    //     payload: {
-    //       id: nanoid(),
-    //       name: activity,
-    //       status: false,
-    //     },
-    //   }),
-    // },
-
-    removeTodo: (state, action) => {
-      state.value = state.value.filter((item) => item.name !== action.payload);
-    },
-
-    updateTodo: (state, action) => {
-      const found = state.value.find((item) => item.name === action.payload);
-      found.status = !found.status;
-    },
-
     setAll: (state, action) => {
       state.value = state.value.map((item) => ({ ...item, status: action.payload }));
-    },
-
-    changeActiveButton: (state, action) => {
-      state.activeButton = action.payload;
     },
 
   },
 
   extraReducers: {
-    // get
+
     [getAsyncTodo.pending]: (state) => {
       state.isLoading = true;
     },
@@ -82,7 +63,6 @@ export const todoSlice = createSlice({
       state.error = action.error.message;
     },
 
-    // post
     [postAsyncTodo.fulfilled]: (state, action) => {
       state.value.push(action.payload);
     },
@@ -90,6 +70,14 @@ export const todoSlice = createSlice({
     [updateAsyncTodo.fulfilled]: (state, action) => {
       const index = state.value.findIndex((item) => item.name === action.payload.name);
       state.value[index].status = action.payload.status;
+    },
+
+    [deleteAsyncTodo.fulfilled]: (state, action) => {
+      state.value = action.payload;
+    },
+
+    [setAllAsyncTodo.fulfilled]: (state, action) => {
+      state.value = action.payload;
     },
   },
 
