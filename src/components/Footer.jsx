@@ -1,6 +1,6 @@
 import React, { createRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeActiveButton } from '../redux/todoSlice';
+import { changeActiveButton, deleteCompletedAsyncTodo } from '../redux/todoSlice';
 
 function Footer() {
   const footerRef = createRef();
@@ -28,6 +28,10 @@ function Footer() {
         button.classList.remove('border-gray-400');
       }
     });
+  };
+
+  const clearCompleted = () => {
+    dispatch(deleteCompletedAsyncTodo());
   };
 
   return (
@@ -60,7 +64,13 @@ function Footer() {
       >
         Completed
       </button>
-      <button type="button" className="absolute right-3 border border-red-300 text-sm rounded-lg px-1">Clear Completed</button>
+      <button
+        onClick={clearCompleted}
+        type="button"
+        className="absolute right-3 border border-red-300 text-sm rounded-lg px-1"
+      >
+        Clear Completed
+      </button>
     </div>
   );
 }

@@ -44,6 +44,11 @@ app.get('/todos/setAll', (req, res) => {
   res.send(todos);
 });
 
+app.get('/todos/deleteCompleted', (req, res) => {
+  todos = todos.filter((item) => item.status === false);
+  res.send(todos);
+});
+
 app.delete('/todos/:name', (req, res) => {
   todos = todos.filter((item) => item.name !== req.params.name);
   res.send(todos);

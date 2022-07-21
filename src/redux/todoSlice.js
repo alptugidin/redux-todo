@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, nanoid } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 export const getAsyncTodo = createAsyncThunk(
@@ -32,6 +32,11 @@ export const setAllAsyncTodo = createAsyncThunk('todos/setAllAsyncTodo', async (
   return response.data;
 });
 
+export const deleteCompletedAsyncTodo = createAsyncThunk('todos/deleteCompletedAsyncTodo', async () => {
+  const response = await axios.get('/todos/deleteCompleted');
+  return response.data;
+});
+
 export const todoSlice = createSlice({
   name: 'todo',
   initialState:
@@ -41,14 +46,12 @@ export const todoSlice = createSlice({
         error: null,
         activeButton: 'All',
       },
+
   reducers: {
-
-    setAll: (state, action) => {
-      state.value = state.value.map((item) => ({ ...item, status: action.payload }));
+    changeActiveButton: (state, action) => {
+      state.activeButton = action.payload;
     },
-
   },
-
   extraReducers: {
 
     [getAsyncTodo.pending]: (state) => {
@@ -79,10 +82,14 @@ export const todoSlice = createSlice({
     [setAllAsyncTodo.fulfilled]: (state, action) => {
       state.value = action.payload;
     },
+
+    [deleteCompletedAsyncTodo.fulfilled]: (state, action) => {
+      state.value = action.payload;
+    },
   },
 
 });
 export const {
-  removeTodo, updateTodo, setAll, changeActiveButton,
+  changeActiveButton,
 } = todoSlice.actions;
 export default todoSlice.reducer;
